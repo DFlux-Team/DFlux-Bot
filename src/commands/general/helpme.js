@@ -12,6 +12,7 @@ module.exports = {
                     m.roles.cache.has(client.config.roles.helper) &&
                     m.roles.cache.has(client.config.roles[lang])
             );
+            console.log(members);
             const random = () => {
                 const arr = [...members.values()];
                 return arr[Math.floor(Math.random() * arr.length)];
