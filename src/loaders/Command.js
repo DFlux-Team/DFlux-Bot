@@ -6,6 +6,7 @@ module.exports = (client) => {
     const table = new AsciiTable();
     table.setHeading("Category", "Status");
     client.commands = new Collection();
+    client.categories = [];
     const commandFolder = `${__dirname}/../commands`;
     let commandFolders;
     if (fs.existsSync(commandFolder)) {
