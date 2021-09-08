@@ -14,7 +14,7 @@ module.exports = {
             );
             let member = members.random();
             message.channel.send(
-                `${member.user}, could you help ${message.author}?`
+                `${member}, could you help ${message.author}?`
             );
             const filter = (m) => m.author.id === member.user.id;
             let messages = await message.channel.awaitMessages({
@@ -26,7 +26,7 @@ module.exports = {
             const reRoll = async () => {
                 member = members.random();
                 message.channel.send(
-                    `${member.user}, could you help ${message.author}?`
+                    `${member}, could you help ${message.author}?`
                 );
                 if (
                     (await message.channel
