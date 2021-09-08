@@ -7,7 +7,7 @@ module.exports = {
                 const cid = client.config.channels[cname];
                 if (message.channel.id === cid) lang = cname;
             });
-            const members = (await message.guild.members.fetch()).filter(
+            const members = message.guild.members.cache.filter(
                 (m) =>
                     m.roles.cache.has(client.config.roles.helper) &&
                     m.roles.cache.has(client.config.roles[lang])
