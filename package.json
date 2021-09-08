@@ -1,0 +1,42 @@
+{
+  "name": "dflux",
+  "version": "0.1.0",
+  "description": "DFlux helper bot",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "startDev": "node --trace-warnings src/index.js",
+    "lint": "eslint src",
+    "format:check": "prettier --check .",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DFlux-Team/DFlux-Bot.git"
+  },
+  "keywords": [
+    "discord",
+    "js",
+    "node",
+    "discord-js"
+  ],
+  "author": "PuneetGopinath",
+  "license": "LGPL-2.1-only",
+  "bugs": {
+    "url": "https://github.com/DFlux-Team/DFlux-Bot/issues"
+  },
+  "homepage": "https://github.com/DFlux-Team/DFlux-Bot#readme",
+  "dependencies": {
+    "discord.js": "^13.0.0",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "mocha": "^9.0.2",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2"
+  }
+}
