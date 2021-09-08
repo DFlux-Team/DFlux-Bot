@@ -12,7 +12,11 @@ module.exports = {
                     m.roles.cache.has(client.config.roles.helper) &&
                     m.roles.cache.has(client.config.roles[lang])
             );
-            let member = members.random();
+            const random = () => {
+                const arr = [...members.values()];
+                return arr[Math.floor(Math.random() * arr.length)];
+            }
+            let member = random();
             message.channel.send(
                 `${member}, could you help ${message.author}?`
             );
@@ -24,7 +28,7 @@ module.exports = {
                 errors: ["time"],
             });
             const reRoll = async () => {
-                member = members.random();
+                member = random();
                 message.channel.send(
                     `${member}, could you help ${message.author}?`
                 );
