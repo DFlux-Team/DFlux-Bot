@@ -26,7 +26,9 @@ module.exports = {
                 );
             if (!command) return;
             message.channel.sendTyping();
-            console.log(`Executing ${command.name} command, invoked by ${message.author.tag}`);
+            console.log(
+                `Executing ${command.name} command, invoked by ${message.author.tag}`
+            );
             command.execute({ message, client, args });
         }
     },

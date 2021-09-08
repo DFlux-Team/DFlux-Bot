@@ -7,15 +7,11 @@ module.exports = {
                 const cid = client.config.channels[cname];
                 if (message.channel.id === cid) lang = cname;
             });
-            const members = await message.guild.members
-                .fetch()
-                .then((mems) =>
-                    mems.filter(
-                        (m) =>
-                            m.roles.cache.has(client.config.roles.helper) &&
-                            m.roles.cache.has(client.config.roles[lang])
-                    )
-                );
+            const members = (await message.guild.members.fetch()).filter(
+                (m) =>
+                    m.roles.cache.has(client.config.roles.helper) &&
+                    m.roles.cache.has(client.config.roles[lang])
+            );
             let member = members.random();
             message.channel.send(
                 `${member.user}, could you help ${message.author}?`
