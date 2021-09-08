@@ -18,6 +18,7 @@ module.exports = {
                 return arr[Math.floor(Math.random() * arr.length)];
             }
             let member = random();
+            while (!member) member = random();
             message.channel.send(
                 `${member}, could you help ${message.author}?`
             );
@@ -30,6 +31,7 @@ module.exports = {
             });
             const reRoll = async () => {
                 member = random();
+                while (!member) member = random();
                 message.channel.send(
                     `${member}, could you help ${message.author}?`
                 );
