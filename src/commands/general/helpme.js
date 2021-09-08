@@ -10,9 +10,9 @@ module.exports = {
             const members = message.guild.members.cache.filter(
                 (m) =>
                     m.roles.cache.has(client.config.roles.helper) &&
-                    m.roles.cache.has(client.config.roles[lang])
+                    m.roles.cache.has(client.config.roles[lang]) &&
+                    m.user.id !== message.author.id
             );
-            console.log(members);
             const random = () => {
                 const arr = [...members.values()];
                 return arr[Math.floor(Math.random() * arr.length)];
