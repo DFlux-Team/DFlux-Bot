@@ -2,6 +2,7 @@ module.exports = {
     name: "messageCreate",
     once: false,
     async execute(client, message) {
+        if (client.debug) console.log("messageCreate event");
         const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const prefixes = [escapeRegex(client.config.prefix.toLowerCase())];
         const prefixRegex = new RegExp(
@@ -25,6 +26,7 @@ module.exports = {
                 );
             if (!command) return;
             message.channel.sendTyping();
+            console.log(`Executing ${command.name} command, invoked by ${message.author.tag}`);
             command.execute({ message, client, args });
         }
     },

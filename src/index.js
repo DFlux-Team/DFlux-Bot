@@ -44,4 +44,5 @@ client.config = require("./config");
     require(`./loaders/${f}.js`)(client);
     console.log(`Finished loading ${f}s.`);
 });
+client.debug = process.env.NODE_ENV === "development";
 client.login(process.env.DISCORD_TOKEN);
