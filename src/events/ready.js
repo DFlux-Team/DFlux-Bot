@@ -13,6 +13,8 @@ module.exports = {
                 presences[Math.floor(Math.random() * presences.length)],
             ],
         });
-        console.log(`${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.size} servers.`);
+        console.log(
+            `${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.size} servers.`
+        );
     },
 };

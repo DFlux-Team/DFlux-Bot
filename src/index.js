@@ -11,6 +11,33 @@ const client = new Client({
     ],
     partials: ["CHANNEL"],
 });
+process.on("unhandledRejection", (error) => {
+    console.log("Unhandled promise rejection");
+    console.error(error);
+    const channel =
+        client.channels.cache.get(client.config?.errorLogsChannelId) ?? null;
+    if (channel)
+        channel
+            .send({
+                embeds: [
+                    {
+                        title: ":x: An error occurred",
+                        description: `${error}`,
+                        fields: [
+                            {
+                                name: "Stack trace",
+                                value: `${error.stack}`,
+                                inline: true,
+                            },
+                        ],
+                    },
+                ],
+            })
+            .catch(() => {});
+});
+process.on("exit", (code) => {
+    client.destroy();
+});
 client.config = require("./config");
 ["Command", "Event"].forEach((f) => {
     console.log(`Loading ${f}s.`);
