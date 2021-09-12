@@ -11,7 +11,7 @@ module.exports = {
         let lang = null;
         Object.keys(client.config.channels).forEach((cname) => {
             const cid = client.config.channels[cname];
-            if (message.channel.id === cid) lang = cname;
+            if (message.channel.id === cid && !lang) lang = cname;
         });
         const members = message.guild.members.cache.filter(
             (m) =>
@@ -25,6 +25,7 @@ module.exports = {
         }
         if (members.size === 0) return message.reply(`Sorry, I could not find any guy to help you.`);
         let member = members.random();
+        members.sweep(m => m.user.id === member.id);
         message.channel.send(`${member}, could you help ${message.author}?`);
         const filter = (m) => m.author.id === member.user.id;
         let messages = await message.channel.awaitMessages({
@@ -35,6 +36,7 @@ module.exports = {
         });
         const reRoll = async () => {
             member = members.random();
+            members.sweep(m => m.user.id === member.id);
             message.channel.send(
                 `${member}, could you help ${message.author}?`
             );
