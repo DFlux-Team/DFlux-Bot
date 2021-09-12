@@ -1,7 +1,7 @@
 module.exports = {
     name: "helpme",
     execute: async ({ message, client, args }) => {
-        if (message.channel?.parent?.id === client.config.channels.help) {
+        if (message.channel?.parent?.id !== client.config.channels.help) {
             if (client.debug)
                 console.log(
                     "helpme command not used in a help channel so ignoring"
