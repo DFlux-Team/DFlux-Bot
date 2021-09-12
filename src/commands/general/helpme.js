@@ -20,7 +20,10 @@ module.exports = {
                 m.roles.cache.has(client.config.roles[lang]) &&
                 m.user.id !== message.author.id
         );
-        if (client.debug) console.log(`Got ${members.size} message`);
+        if (client.debug) {
+            console.log(`Role ID: ${client.config.roles[lang]}`);
+            console.log(`Got ${members.size} members`);
+        }
         let member = members.random(1)[0];
         message.channel.send(`${member}, could you help ${message.author}?`);
         const filter = (m) => m.author.id === member.user.id;
