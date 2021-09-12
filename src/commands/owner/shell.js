@@ -1,9 +1,10 @@
+const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "shell",
     owner: true,
     execute: async ({ message, client, args }) => {
         const command = args.join(" ");
-        const embed = new Embed({ color: "success" }).addField(
+        const embed = new MessageEmbed().addField(
             "**Input**",
             "```js\n" + command + "\n```"
         );
