@@ -23,9 +23,12 @@ module.exports = {
             console.log(`Language: ${lang}`);
             console.log(`Got ${members.size} members`);
         }
-        if (members.size === 0) return message.reply(`Sorry, I could not find any guy to help you.`);
+        if (members.size === 0)
+            return message.reply(
+                `Sorry, I could not find any guy to help you.`
+            );
         let member = members.random();
-        members.sweep(m => m.user.id === member.id);
+        members.sweep((m) => m.user.id === member.id);
         message.channel.send(`${member}, could you help ${message.author}?`);
         const filter = (m) => m.author.id === member.user.id;
         let messages = await message.channel.awaitMessages({
@@ -36,7 +39,7 @@ module.exports = {
         });
         const reRoll = async () => {
             member = members.random();
-            members.sweep(m => m.user.id === member.id);
+            members.sweep((m) => m.user.id === member.id);
             message.channel.send(
                 `${member}, could you help ${message.author}?`
             );
