@@ -53,5 +53,5 @@ const cron = require("node-cron");
 cron.schedule("0 0 */2 * * *", () => {
     client.channels.cache
         .get("870330763772563482")
-        .send(`<@${client.config.roles.bumper}> Time to bump`);
+        .send(`<@&${client.config.roles.bumper}> Time to bump`);
 });
