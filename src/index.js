@@ -1,5 +1,6 @@
-const { Client, Intents } = require("discord.js");
 require("dotenv").config();
+const { Client, Intents } = require("discord.js");
+const util = require("util");
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -9,7 +10,7 @@ const client = new Client({
         Intents.FLAGS.DIRECT_MESSAGES,
         Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
     ],
-    partials: ["CHANNEL"],
+    //partials: ["CHANNEL"],
 });
 process.on("unhandledRejection", (error) => {
     console.log("Unhandled promise rejection");
@@ -38,6 +39,7 @@ process.on("unhandledRejection", (error) => {
 process.on("exit", (code) => {
     client.destroy();
 });
+client.wait = util.promisify(setTimeout); // await client.wait(1000) - Wait 1 second
 client.config = require("./config");
 ["Command", "Event"].forEach((f) => {
     console.log(`Loading ${f}s.`);

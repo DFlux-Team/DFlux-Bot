@@ -17,4 +17,7 @@ module.exports = {
     dflux: "870330763772563476",
     prefix: "dflux ",
     errorLogsChannelId: "885163566578143292",
+    owners: [
+        "815204465937481749"
+    ],
 };
