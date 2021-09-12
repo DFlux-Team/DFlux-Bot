@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { inspect } = require("util");
 module.exports = {
     name: "shell",
     owner: true,
