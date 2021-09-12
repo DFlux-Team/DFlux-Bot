@@ -8,9 +8,6 @@ module.exports = {
                 );
             return;
         }
-        message.guild.members.cache.forEach(async (m) => {
-            await m.roles.fetch();
-        });
         let lang = null;
         Object.keys(client.config.channels).forEach((cname) => {
             const cid = client.config.channels[cname];
