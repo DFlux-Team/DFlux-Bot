@@ -8,7 +8,9 @@ module.exports = {
                 );
             return;
         }
-
+        message.guild.members.cache.forEach(async (m) => {
+            await m.roles.fetch();
+        });
         let lang = null;
         Object.keys(client.config.channels).forEach((cname) => {
             const cid = client.config.channels[cname];
@@ -21,6 +23,7 @@ module.exports = {
                 m.user.id !== message.author.id
         );
         if (client.debug) {
+            console.log(`Language: ${lang}`);
             console.log(`Role ID: ${client.config.roles[lang]}`);
             console.log(`Got ${members.size} members`);
         }
@@ -48,5 +51,6 @@ module.exports = {
                 errors: ["time"],
             });
         }
+        message.delete();
     },
 };
