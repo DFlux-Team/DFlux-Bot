@@ -21,12 +21,7 @@ module.exports = {
                 m.user.id !== message.author.id
         );
         if (client.debug) console.log(`Got ${members.size} message`);
-        const random = () => {
-            const arr = [...members.values()];
-            return arr[Math.floor(Math.random() * arr.length)];
-        };
-        let member = random();
-        while (!member) member = random();
+        let member = members.random(1)[0];
         message.channel.send(`${member}, could you help ${message.author}?`);
         const filter = (m) => m.author.id === member.user.id;
         let messages = await message.channel.awaitMessages({
@@ -36,8 +31,7 @@ module.exports = {
             errors: ["time"],
         });
         const reRoll = async () => {
-            member = random();
-            while (!member) member = random();
+            member = members.random(1)[0];
             message.channel.send(
                 `${member}, could you help ${message.author}?`
             );
