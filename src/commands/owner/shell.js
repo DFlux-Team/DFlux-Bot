@@ -29,7 +29,9 @@ module.exports = {
                 }
                 return message.reply({
                     embeds: [
-                        embed.setDescription("ERROR:\n```js\n" + clean(err) + "\n```"),
+                        embed.setDescription(
+                            "ERROR:\n```js\n" + clean(err) + "\n```"
+                        ),
                     ],
                 });
             }

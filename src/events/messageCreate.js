@@ -25,7 +25,11 @@ module.exports = {
                     (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
                 );
             if (!command) return;
-            if (command.owner && !client.config.owners.includes(message.author.id)) return;
+            if (
+                command.owner &&
+                !client.config.owners.includes(message.author.id)
+            )
+                return;
             message.channel.sendTyping();
             console.log(
                 `Executing ${command.name} command, invoked by ${message.author.tag}`
