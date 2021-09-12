@@ -25,6 +25,7 @@ module.exports = {
             return arr[Math.floor(Math.random() * arr.length)];
         };
         let member = random();
+        if (client.debug) console.log(member);
         while (!member) member = random();
         message.channel.send(`${member}, could you help ${message.author}?`);
         const filter = (m) => m.author.id === member.user.id;
