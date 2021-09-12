@@ -29,7 +29,7 @@ module.exports = {
                 }
                 return message.reply({
                     embeds: [
-                        embed.setDesc("ERROR:\n```js\n" + clean(err) + "\n```"),
+                        embed.setDescription("ERROR:\n```js\n" + clean(err) + "\n```"),
                     ],
                 });
             }
@@ -41,7 +41,7 @@ module.exports = {
             message.reply({
                 embeds: [
                     embed
-                        .setDesc("```js\n" + clean(res) + "\n```")
+                        .setDescription("```js\n" + clean(res) + "\n```")
                         .addField("**Type**", type),
                 ],
             });
