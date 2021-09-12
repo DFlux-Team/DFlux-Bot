@@ -40,20 +40,15 @@ module.exports = {
             message.channel.send(
                 `${member}, could you help ${message.author}?`
             );
-            if (
-                (await message.channel
-                    .awaitMessages({
-                        filter,
-                        time: 5 * 60 * 1000,
-                        max: 1,
-                        errors: ["time"],
-                    })
-                    .then((msgs) => msgs.size)) < 0
-            )
-                reRoll();
         };
-        if (messages.size < 0) {
+        while (messages.size < 0) {
             await reRoll();
+            messages = await message.channel.awaitMessages({
+                filter,
+                time: 5 * 60 * 1000,
+                max: 1,
+                errors: ["time"],
+            });
         }
     },
 };
