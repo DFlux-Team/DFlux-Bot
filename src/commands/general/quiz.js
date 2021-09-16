@@ -33,7 +33,9 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle("Developers Quiz!")
             .setDescription(question.question)
-            .addField("**Options**", `• ${Object.values(question.answers).filter(o => o).join("\n• ")}`);
+            .addField("**Options**", `• ${Object.values(question.answers).filter(o => o).join("\n• ")}`)
+            .setColor("RANDOM");
+        if (message.guild) embed.setAuthor(message.guild.name, message.guild.displayAvatarURL());
         const options = [];
         Object.values(question.answers).filter(o => o).forEach(() => {
             options.push(new MessageButton());
@@ -48,9 +50,9 @@ module.exports = {
             const id = `${random}-${question.answers[`answer_${alphabet}`]}`;
             codes.set(alphabet, id);
             button
-                .setEmoji(client.data.emojiCharacters[alphabet])
-                .setStyle("PRIMARY")
-                .setLabel(alphabet)
+                //.setEmoji(client.data.emojiCharacters[alphabet])
+                .setStyle("SUCCESS")
+                .setLabel(alphabet.toUpperCase())
                 .setCustomId(id);
         }
         const row = new MessageActionRow();
