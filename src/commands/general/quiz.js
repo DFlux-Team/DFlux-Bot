@@ -4,7 +4,7 @@ const genToken = () => {
     let token = "";
     const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzy0123456789.-_";
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
         token += characters.charAt(
             Math.floor(Math.random() * characters.length)
         );
@@ -79,7 +79,7 @@ module.exports = {
         collector.on("collect", async (interaction) => {
             await interaction.deferReply();
             const find = getByValue(codes, interaction.customId);
-            console.log(find, correct, codes);
+            if (client.debug) console.log(find, correct, codes);
             if (find && correct === find) {
                 msg.edit({ embeds: [embed.setFooter(`Winner is ${interaction.user.tag}`)] });
                 interaction.followUp(`Congratulations ${interaction.user}! You did answer correctly! :tada:`);
