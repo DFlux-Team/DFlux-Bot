@@ -36,7 +36,7 @@ module.exports = {
             .addField("Category", `${question.category}`)
             .addField("**Options**", `• ${Object.values(question.answers).filter(o => o).join("\n• ")}`)
             .setColor("RANDOM");
-        if (message.guild) embed.setAuthor(message.guild.name, message.guild.displayAvatarURL());
+        if (message.guild) embed.setAuthor(message.guild.name, message.guild.iconURL() ?? "https://emoji.gg/assets/emoji/discord.png");
         const options = [];
         Object.values(question.answers).filter(o => o).forEach(() => {
             options.push(new MessageButton());
