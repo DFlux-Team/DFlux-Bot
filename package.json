@@ -6,7 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "startDev": "npx nodemon src/index.js --watch src",
+    "dev": "npx nodemon src/index.js --watch src",
     "lint": "eslint src",
     "format:check": "prettier --check .",
     "format": "prettier --write ."
@@ -29,6 +29,7 @@
   "homepage": "https://github.com/DFlux-Team/DFlux-Bot#readme",
   "dependencies": {
     "ascii-table": "^0.0.9",
+    "axios": "^0.21.4",
     "cron": "^1.8.2",
     "discord.js": "^13.0.0",
     "dotenv": "^10.0.0"
