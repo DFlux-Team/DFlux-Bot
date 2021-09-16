@@ -33,6 +33,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle("Developers Quiz!")
             .setDescription(question.question)
+            .addField("Category", `${question.category}`)
             .addField("**Options**", `• ${Object.values(question.answers).filter(o => o).join("\n• ")}`)
             .setColor("RANDOM");
         if (message.guild) embed.setAuthor(message.guild.name, message.guild.displayAvatarURL());
