@@ -4,7 +4,7 @@ const genToken = () => {
     let token = "";
     const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzy0123456789.-_";
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
         token += characters.charAt(
             Math.floor(Math.random() * characters.length)
         );
@@ -33,7 +33,10 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle("Developers Quiz!")
             .setDescription(question.question)
-            .addField("**Options**", `• ${Object.values(question.answers).filter(o => o).join("\n• ")}`);
+            .addField("Category", `${question.category}`)
+            .addField("**Options**", `• ${Object.values(question.answers).filter(o => o).join("\n• ")}`)
+            .setColor("RANDOM");
+        if (message.guild) embed.setAuthor(message.guild.name, message.guild.iconURL() ?? "https://emoji.gg/assets/emoji/discord.png");
         const options = [];
         Object.values(question.answers).filter(o => o).forEach(() => {
             options.push(new MessageButton());
@@ -48,9 +51,9 @@ module.exports = {
             const id = `${random}-${question.answers[`answer_${alphabet}`]}`;
             codes.set(alphabet, id);
             button
-                .setEmoji(client.data.emojiCharacters[alphabet])
-                .setStyle("PRIMARY")
-                .setLabel(alphabet)
+                //.setEmoji(client.data.emojiCharacters[alphabet])
+                .setStyle("SUCCESS")
+                .setLabel(alphabet.toUpperCase())
                 .setCustomId(id);
         }
         const row = new MessageActionRow();
@@ -76,7 +79,7 @@ module.exports = {
         collector.on("collect", async (interaction) => {
             await interaction.deferReply();
             const find = getByValue(codes, interaction.customId);
-            console.log(find, correct, codes);
+            if (client.debug) console.log(find, correct, codes);
             if (find && correct === find) {
                 msg.edit({ embeds: [embed.setFooter(`Winner is ${interaction.user.tag}`)], components: [] });
                 interaction.followUp(`Congratulations ${interaction.user}! You did answer correctly! :tada:`);
