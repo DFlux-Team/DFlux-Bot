@@ -4,7 +4,7 @@ const genToken = () => {
     let token = "";
     const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzy0123456789.-_";
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
         token += characters.charAt(
             Math.floor(Math.random() * characters.length)
         );
@@ -33,7 +33,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle("Developers Quiz!")
             .setDescription(question.question)
-            .addField("Category", `${question.category}`)
+            .addField("Category", `${question.category ?? "undefined"}`)
             .addField("**Options**", `• ${Object.values(question.answers).filter(o => o).join("\n• ")}`)
             .setColor("RANDOM");
         if (message.guild) embed.setAuthor(message.guild.name, message.guild.iconURL() ?? "https://emoji.gg/assets/emoji/discord.png");
