@@ -78,7 +78,7 @@ module.exports = {
             const find = getByValue(codes, interaction.customId);
             console.log(find, correct, codes);
             if (find && correct === find) {
-                msg.edit({ embeds: [embed.setFooter(`Winner is ${interaction.user.tag}`)] });
+                msg.edit({ embeds: [embed.setFooter(`Winner is ${interaction.user.tag}`)], components: [] });
                 interaction.followUp(`Congratulations ${interaction.user}! You did answer correctly! :tada:`);
             } else {
                 interaction.followUp({ content: `Wrong answer, ${interaction.user}. You choosed Option ${find}`, ephemeral: true });
