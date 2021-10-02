@@ -37,7 +37,7 @@ module.exports = {
                 `Executing ${command.name} command, invoked by ${message.author.tag}`
             );
             command.execute({ message, client, args });
-        } else if (message.author.id === "302050872383242240" && message.embeds[0].description.has("Bump done!")) {
+        } else if (message.author.id === "302050872383242240" && message.embeds[0].description.includes("Bump done!")) {
             setTimeout(() => {
                 client.channels.cache
                     .get(client.config.channels.reminder)
