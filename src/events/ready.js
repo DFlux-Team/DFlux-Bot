@@ -2,19 +2,11 @@ module.exports = {
     name: "ready",
     once: true,
     async execute(client) {
-        const { CronJob } = require("cron");
-        const job = new CronJob(
-            "0 0 */2 * * *",
-            () => {
-                client.channels.cache
-                    .get("870330763772563482")
-                    .send(`<@&${client.config.roles.bumper}> Time to bump`);
-            },
-            null,
-            true,
-            "America/Los_Angeles"
-        );
-        job.start();
+        setTimeout(() => {
+            client.channels.cache
+                .get(client.config.channels.reminder)
+                .send(`<@&${client.config.roles.bumper}> Time to bump`);
+        }, 2 * 60 * 60 * 1000);
 
         const presences = [
             {

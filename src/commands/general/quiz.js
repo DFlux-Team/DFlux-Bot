@@ -1,4 +1,9 @@
-const { MessageEmbed, MessageActionRow, MessageButton, Collection } = require("discord.js");
+const {
+    MessageEmbed,
+    MessageActionRow,
+    MessageButton,
+    Collection,
+} = require("discord.js");
 const axios = require("axios");
 const genToken = () => {
     let token = "";
@@ -34,15 +39,29 @@ module.exports = {
             .setTitle("Developers Quiz!")
             .setDescription(question.question)
             .addField("Category", `${question.category ?? "undefined"}`)
-            .addField("**Options**", `• ${Object.values(question.answers).filter(o => o).join("\n• ")}`)
+            .addField(
+                "**Options**",
+                `• ${Object.values(question.answers)
+                    .filter((o) => o)
+                    .join("\n• ")}`
+            )
             .setColor("RANDOM");
-        if (message.guild) embed.setAuthor(message.guild.name, message.guild.iconURL() ?? "https://emoji.gg/assets/emoji/discord.png");
+        if (message.guild)
+            embed.setAuthor(
+                message.guild.name,
+                message.guild.iconURL() ??
+                    "https://emoji.gg/assets/emoji/discord.png"
+            );
         const options = [];
-        Object.values(question.answers).filter(o => o).forEach(() => {
-            options.push(new MessageButton());
-        });
+        Object.values(question.answers)
+            .filter((o) => o)
+            .forEach(() => {
+                options.push(new MessageButton());
+            });
         const alpha = Array.from(Array(26)).map((e, i) => i + 65);
-        const alphabets = alpha.map((x) => String.fromCharCode(x).toLowerCase());
+        const alphabets = alpha.map((x) =>
+            String.fromCharCode(x).toLowerCase()
+        );
         const codes = new Collection();
         for (let i = 0; i < options.length; i++) {
             const button = options[i];
@@ -81,10 +100,20 @@ module.exports = {
             const find = getByValue(codes, interaction.customId);
             if (client.debug) console.log(find, correct, codes);
             if (find && correct === find) {
-                msg.edit({ embeds: [embed.setFooter(`Winner is ${interaction.user.tag}`)], components: [] });
-                interaction.followUp(`Congratulations ${interaction.user}! You did answer correctly! :tada:`);
+                msg.edit({
+                    embeds: [
+                        embed.setFooter(`Winner is ${interaction.user.tag}`),
+                    ],
+                    components: [],
+                });
+                interaction.followUp(
+                    `Congratulations ${interaction.user}! You did answer correctly! :tada:`
+                );
             } else {
-                interaction.followUp({ content: `Wrong answer, ${interaction.user}. You choosed Option ${find}`, ephemeral: true });
+                interaction.followUp({
+                    content: `Wrong answer, ${interaction.user}. You choosed Option ${find}`,
+                    ephemeral: true,
+                });
             }
         });
         collector.on("end", async (collected) => {
