@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { inspect } = require("util");
+const child = require("child_process");
 module.exports = {
     name: "shell",
     owner: true,
