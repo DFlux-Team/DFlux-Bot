@@ -18,7 +18,7 @@ const genToken = () => {
 };
 module.exports = {
     name: "quiz",
-    execute: async ({ message, client }) => {
+    execute: async ({ message, client, args }) => {
         const { data } = await axios.get(
             "https://quizapi.io/api/v1/questions",
             {
@@ -27,7 +27,13 @@ module.exports = {
                 },
             }
         );
-        const question = data[Math.floor(Math.random() * data.length)];
+        let question = null;
+        if ((args[0] === "--category" || args[0] === "-cat") && args[1])
+            question =
+                data.find(
+                    (q) => q.category.toLowerCase() === args[1].toLowerCase()
+                ) ?? null;
+        if (!question) question = data[Math.floor(Math.random() * data.length)];
         let correct = question.correct_answers;
         const keys = Object.keys(correct);
         correct = keys.filter((key) => {
@@ -86,7 +92,7 @@ module.exports = {
         const ids = [...codes.values()];
         const filter = (i) => ids.includes(i.customId);
         const getByValue = (map, searchValue) => {
-            for (let [key, value] of map.entries()) {
+            for (const [key, value] of map.entries()) {
                 if (value === searchValue) return key;
             }
         };
@@ -103,7 +109,10 @@ module.exports = {
                 msg.edit({
                     embeds: [
                         embed
-                            .setFooter(`Winner is ${interaction.user.tag}. Answer is Option ${find}`, interaction.user.displayAvatarURL())
+                            .setFooter(
+                                `Winner is ${interaction.user.tag}. Answer is Option ${find}`,
+                                interaction.user.displayAvatarURL()
+                            )
                             .setColor("AQUA")
                             .setTimestamp(),
                     ],

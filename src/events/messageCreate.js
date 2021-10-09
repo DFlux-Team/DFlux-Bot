@@ -1,5 +1,3 @@
-const { m } = require("../data/emojiCharacters");
-
 module.exports = {
     name: "messageCreate",
     once: false,
@@ -37,13 +35,16 @@ module.exports = {
                 `Executing ${command.name} command, invoked by ${message.author.tag}`
             );
             command.execute({ message, client, args });
-        } else if (message.author.id === "302050872383242240" && message.embeds[0].description.includes("Bump done!")) {
+        } else if (
+            message.author.id === "302050872383242240" &&
+            message.embeds[0].description.includes("Bump done!")
+        ) {
             setTimeout(() => {
                 client.channels.cache
                     .get(client.config.channels.reminder)
                     .send(`<@&${client.config.roles.bumper}> Time to bump`);
             }, 2 * 60 * 60 * 1000);
-            message.channel.send("Reminder set!").then(msg => {
+            message.channel.send("Reminder set!").then((msg) => {
                 setTimeout((m) => m.delete(), 5 * 1000, msg);
             });
         }
