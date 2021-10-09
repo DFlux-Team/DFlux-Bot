@@ -102,12 +102,15 @@ module.exports = {
             if (find && correct === find) {
                 msg.edit({
                     embeds: [
-                        embed.setFooter(`Winner is ${interaction.user.tag}`),
+                        embed
+                            .setFooter(`Winner is ${interaction.user.tag}. Answer is Option ${find}`, interaction.user.displayAvatarURL())
+                            .setColor("AQUA")
+                            .setTimestamp(),
                     ],
                     components: [],
                 });
                 interaction.followUp(
-                    `Congratulations ${interaction.user}! You did answer correctly! :tada:`
+                    `Congratulations ${interaction.user}! You did answer correctly (Option ${find})! :tada:`
                 );
             } else {
                 interaction.followUp({
