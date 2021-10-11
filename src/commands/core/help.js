@@ -7,9 +7,7 @@ module.exports = {
             .setColor("RANDOM")
             .setTitle("DFlux BOT")
             .setURL("https://github.com/DFlux-Team/DFlux-Bot")
-            .setDescription(
-                "A BOT That Is Busy In Helping the People On the DevFlux Server"
-            )
+            .setDescription("I Help People On The DevFlux Server")
             .setThumbnail("https://i.imgur.com/NzuazOI.png")
             .addFields(
                 {
@@ -29,7 +27,7 @@ module.exports = {
                 }
             )
             .setTimestamp()
-            .setFooter(`Help Command Issused by ${message.author} `);
+            .setFooter(`Requested by ${message.author} `);
 
         message.channel.send({ embed: [helpEmbed] });
     },
