@@ -1,5 +1,6 @@
 module.exports = {
     name: "helpme",
+    description: "Get help from other users",
     execute: async ({ message, client, args }) => {
         if (message.channel?.parent?.id !== client.config.channels.help) {
             if (client.debug)

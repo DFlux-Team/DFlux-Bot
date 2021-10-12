@@ -18,6 +18,7 @@ const genToken = () => {
 };
 module.exports = {
     name: "quiz",
+    description: "Start a quiz!",
     execute: async ({ message, client, args }) => {
         const { data } = await axios.get(
             "https://quizapi.io/api/v1/questions",
