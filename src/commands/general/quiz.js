@@ -134,8 +134,7 @@ module.exports = {
                                 `${tag} won! (Option ${find}). It's the ${done[id]}${nth(done[id])} attempt of ${tag}`,
                                 interaction.user.displayAvatarURL()
                             )
-                            .setColor("AQUA")
-                            .setTimestamp(),
+                            .setColor("AQUA"),
                     ],
                     components: [],
                 });
