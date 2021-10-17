@@ -32,7 +32,7 @@ module.exports = {
         if ((args[0] === "--category" || args[0] === "-cat") && args[1])
             question =
                 data.find(
-                    (q) => q.category.toLowerCase() === args[1].toLowerCase()
+                    (q) => q.category.toLowerCase().indexOf(args[1].toLowerCase()) !== -1
                 ) ?? null;
         if (!question) question = data[Math.floor(Math.random() * data.length)];
         let correct = question.correct_answers;
