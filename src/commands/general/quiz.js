@@ -74,7 +74,7 @@ module.exports = {
             const button = options[i];
             const random = genToken();
             const alphabet = alphabets[i];
-            const id = `${random}-${question.answers[`answer_${alphabet}`]}`;
+            const id = `${random}-${alphabet}`;
             codes.set(alphabet, id);
             button
                 //.setEmoji(client.data.emojiCharacters[alphabet])
