@@ -16,6 +16,20 @@ const genToken = () => {
     }
     return token;
 };
+//https://stackoverflow.com/a/15397495
+const nth = (d) => {
+    if (d > 3 && d < 21) return "th";
+    switch (d % 10) {
+        case 1:
+            return "st";
+        case 2:
+            return "nd";
+        case 3:
+            return "rd";
+        default:
+            return "th";
+    }
+};
 module.exports = {
     name: "quiz",
     description: "Start a quiz!",
@@ -97,6 +111,7 @@ module.exports = {
                 if (value === searchValue) return key;
             }
         };
+        const done = {};
         const collector = msg.createMessageComponentCollector({
             filter,
             componentType: "BUTTON",
@@ -106,12 +121,18 @@ module.exports = {
             //await interaction.deferReply();
             const find = getByValue(codes, interaction.customId);
             if (client.debug) console.log(find, correct, codes);
+            const { id, tag } = interaction.user;
+            if (!done[id]) done[id] = 0;
+            else if (done[id] > 3) interaction.reply(`You can't attemt more than 3 times, ${tag}`);
+            done[id]++;
+            if (done[id] && done[id] > 1)
+                interaction.channel.send(`This is the ${done[id]}${nth(done[id])} attempt of **${tag}**`);
             if (find && correct === find) {
                 msg.edit({
                     embeds: [
                         embed
                             .setFooter(
-                                `Winner is ${interaction.user.tag}. Answer is Option ${find}`,
+                                `Winner is ${tag}. Answer is Option ${find}`,
                                 interaction.user.displayAvatarURL()
                             )
                             .setColor("AQUA")
@@ -120,18 +141,18 @@ module.exports = {
                     components: [],
                 });
                 interaction.reply(
-                    `Congratulations ${interaction.user}! You did answer correctly (Option ${find})! :tada:`
+                    `Congratulations ${interaction.user}! You selected the correct answer (Option ${find})! :tada:`
                 );
                 /*interaction.followUp(
-                    `Congratulations ${interaction.user}! You did answer correctly (Option ${find})! :tada:`
+                    `Congratulations ${interaction.user}! You selected the correct answer (Option ${find})! :tada:`
                 );*/
             } else {
                 interaction.reply({
-                    content: `Wrong answer, ${interaction.user}. You choosed Option ${find}`,
+                    content: `Wrong answer, ${tag} (Option ${find})`,
                     ephemeral: true,
                 });
                 /*interaction.followUp({
-                    content: `Wrong answer, ${interaction.user}. You choosed Option ${find}`,
+                    content: `Wrong answer, ${tag} (Option ${find})`,
                     ephemeral: true,
                 });*/
             }
