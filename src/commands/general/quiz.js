@@ -125,14 +125,13 @@ module.exports = {
             if (!done[id]) done[id] = 0;
             else if (done[id] > 3) interaction.reply(`You can't attemt more than 3 times, ${tag}`);
             done[id]++;
-            if (done[id] && done[id] > 1)
-                interaction.channel.send(`This is the ${done[id]}${nth(done[id])} attempt of **${tag}**`);
+            //if (done[id] && done[id] > 1) interaction.channel.send(`This is the ${done[id]}${nth(done[id])} attempt of **${tag}**`);
             if (find && correct === find) {
                 msg.edit({
                     embeds: [
                         embed
                             .setFooter(
-                                `Winner is ${tag}. Answer is Option ${find}`,
+                                `Winner is ${tag}. Answer is Option ${find}. This is the ${done[id]}${nth(done[id])} attempt of ${tag}`,
                                 interaction.user.displayAvatarURL()
                             )
                             .setColor("AQUA")
