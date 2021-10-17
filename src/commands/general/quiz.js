@@ -103,7 +103,7 @@ module.exports = {
             time: 60 * 60 * 1000, //60 minutes
         });
         collector.on("collect", async (interaction) => {
-            await interaction.deferReply();
+            //await interaction.deferReply();
             const find = getByValue(codes, interaction.customId);
             if (client.debug) console.log(find, correct, codes);
             if (find && correct === find) {
@@ -119,14 +119,21 @@ module.exports = {
                     ],
                     components: [],
                 });
-                interaction.followUp(
+                interaction.reply(
                     `Congratulations ${interaction.user}! You did answer correctly (Option ${find})! :tada:`
                 );
+                /*interaction.followUp(
+                    `Congratulations ${interaction.user}! You did answer correctly (Option ${find})! :tada:`
+                );*/
             } else {
-                interaction.followUp({
+                interaction.reply({
                     content: `Wrong answer, ${interaction.user}. You choosed Option ${find}`,
                     ephemeral: true,
                 });
+                /*interaction.followUp({
+                    content: `Wrong answer, ${interaction.user}. You choosed Option ${find}`,
+                    ephemeral: true,
+                });*/
             }
         });
         collector.on("end", async (collected) => {
