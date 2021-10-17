@@ -131,7 +131,7 @@ module.exports = {
                     embeds: [
                         embed
                             .setFooter(
-                                `Winner is ${tag}. Answer is Option ${find}. This is the ${done[id]}${nth(done[id])} attempt of ${tag}`,
+                                `${tag} won! (Option ${find}). It's the ${done[id]}${nth(done[id])} attempt of ${tag}`,
                                 interaction.user.displayAvatarURL()
                             )
                             .setColor("AQUA")
