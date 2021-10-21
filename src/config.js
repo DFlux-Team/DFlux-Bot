@@ -1,6 +1,7 @@
+const bumper = "883318319099285515"; //bumper role, used in 3 places
 module.exports = {
     roles: {
-        bumper: "883318319099285515",
+        bumper,
         helper: "884469313749258312",
         python: "870335720248713236",
         js: "870335807288918107",
@@ -17,6 +18,8 @@ module.exports = {
         lua: "871289305627234344",
         elixir: "871286006622609458",
         haskell: "871305995190669333",
+        html: bumper,
+        others: bumper,
     },
     channels: {
         help: "870344374347759636",
@@ -35,6 +38,8 @@ module.exports = {
         lua: "872341728542203924",
         elixir: "872341456889716746",
         haskell: "872341429941313606",
+        html: "871068565988601937",
+        others: "870344985256529991",
         reminder: "870330763772563482",
     },
     dflux: "870330763772563476",
