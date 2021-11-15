@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "leaderboard",
-    aliases: ["bumpboard", "top"],
+    aliases: ["bumpboard", "top", "lb"],
     description: "Shows your bump stats or someone elses",
     execute: async ({ message, client }) => {
         const tags = await client.models.User.find({}).then((xyz) => {
