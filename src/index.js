@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 const util = require("util");
+const clock = require("date-events")();
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -36,8 +37,19 @@ process.on("unhandledRejection", (error) => {
             })
             .catch(() => {});
 });
-process.on("exit", (code) => {
+process.on("beforeExit", (/*code*/) => {
     client.destroy();
+});
+clock.on("weekday", (dayNum) => {
+    if (Number(dayNum) !== 7) return;
+    client.models.User.updateMany(
+        {},
+        {
+            $set: {
+                bumpsThisWeek: 0,
+            },
+        }
+    );
 });
 client.wait = util.promisify(setTimeout); // await client.wait(1000) - Wait 1 second
 client.config = require("./config");
@@ -48,4 +60,16 @@ client.config = require("./config");
 });
 client.debug = process.env.NODE_ENV === "development";
 client.data = require("./data");
+client.reminderTimeout = null;
+client.models = require("./models");
+client.util = new (require("./Util"))(client);
+// eslint-disable-next-line no-undef
+require("mongoose")
+    .connect(process.env.MONGO_URL)
+    .then(() => {
+        console.log("Connected to MongoDB!");
+    })
+    .catch((err) => {
+        console.error("Error connecting to MongoDB: ", err);
+    });
 client.login(process.env.DISCORD_TOKEN);

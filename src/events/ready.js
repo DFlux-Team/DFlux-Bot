@@ -2,11 +2,8 @@ module.exports = {
     name: "ready",
     once: true,
     async execute(client) {
-        setTimeout(() => {
-            client.channels.cache
-                .get(client.config.channels.reminder)
-                .send(`<@&${client.config.roles.bumper}> Time to bump`);
-        }, 2 * 60 * 60 * 1000);
+        client.channels.fetch(client.config.channels.reminder);
+        client.util.setReminderTimeout();
 
         const presences = [
             {

@@ -14,6 +14,7 @@ module.exports = {
         } catch (e) {} //eslint-disable-line no-empty
         if (!client.application?.owner) await client.application?.fetch();
         if (prefix && !message.author.bot) {
+            const userDB = await client.util.fetchUserData(message.author.id);
             const args = message.content
                 .slice(prefix.length)
                 .trim()
@@ -34,17 +35,19 @@ module.exports = {
             console.log(
                 `Executing ${command.name} command, invoked by ${message.author.tag}`
             );
-            command.execute({ message, client, args });
+            command.execute({ message, client, args, userDB });
         } else if (
             message.author.id === "302050872383242240" &&
             message.embeds[0].description.includes("Bump done!")
         ) {
-            setTimeout(() => {
-                client.channels.cache
-                    .get(client.config.channels.reminder)
-                    .send(`<@&${client.config.roles.bumper}> Time to bump`);
-            }, 2 * 60 * 60 * 1000);
-            message.channel.send("Reminder set!").then((msg) => {
+            const mention = message.embeds[0].description.split(" ")[0];
+            const user = client.util.userFromMention(mention, client);
+            const userDB = await client.util.fetchUserData(user.id);
+            userDB.totalBumps = Number(userDB.totalBumps) + 1;
+            userDB.bumpsThisWeek = Number(userDB.bumpsThisWeek) + 1;
+            await userDB.save();
+            client.util.setReminderTimeout();
+            message.channel.send("Bump Reminder set!").then((msg) => {
                 setTimeout((m) => m.delete(), 5 * 1000, msg);
             });
         }
