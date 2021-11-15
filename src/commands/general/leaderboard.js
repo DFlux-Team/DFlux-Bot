@@ -5,17 +5,15 @@ module.exports = {
     description: "Shows your bump stats or someone elses",
     execute: async ({ message, client }) => {
         const tags = await client.models.User.find({}).then((xyz) => {
-            xyz.forEach((a) => client.users.fetch(a).catch(console.log));
             return xyz
                 .sort((a, b) => b.totalBumps - a.totalBumps)
-                .slice(0, 20)
+                .slice(0, 10)
                 .map(({ userId, totalBumps: bumps }) => {
-                    const user = client.users.cache.get(userId);
-                    return `${bumps} Bumps - ${user?.tag}`;
+                    return `• ${bumps} Bumps - <@${userId}> (${userId})`;
                 });
         });
         const embed = new MessageEmbed()
-            .setTitle(`Top 20 - Bump Leaderboard`)
+            .setTitle(`Top 10 - Bump Leaderboard`)
             .setDescription(tags.join("\n"))
             .setColor("BLURPLE");
         message.channel.send({ embeds: [embed] });
