@@ -15,7 +15,7 @@ const client = new Client({
 });
 process.on("unhandledRejection", (error) => {
     console.log("Unhandled promise rejection");
-    console.error(error);
+    console.log(error);
     const channel =
         client.channels.cache.get(client.config?.errorLogsChannelId) ?? null;
     if (channel)
