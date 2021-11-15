@@ -46,7 +46,10 @@ module.exports = {
         if ((args[0] === "--category" || args[0] === "-cat") && args[1])
             question =
                 data.find(
-                    (q) => q.category.toLowerCase().indexOf(args[1].toLowerCase()) !== -1
+                    (q) =>
+                        q.category
+                            .toLowerCase()
+                            .indexOf(args[1].toLowerCase()) !== -1
                 ) ?? null;
         if (!question) question = data[Math.floor(Math.random() * data.length)];
         let correct = question.correct_answers;
@@ -123,7 +126,8 @@ module.exports = {
             if (client.debug) console.log(find, correct, codes);
             const { id, tag } = interaction.user;
             if (!done[id]) done[id] = 0;
-            else if (done[id] > 3) interaction.reply(`You can't attemt more than 3 times, ${tag}`);
+            else if (done[id] > 3)
+                interaction.reply(`You can't attemt more than 3 times, ${tag}`);
             done[id]++;
             //if (done[id] && done[id] > 1) interaction.channel.send(`This is the ${done[id]}${nth(done[id])} attempt of **${tag}**`);
             if (find && correct === find) {
@@ -131,7 +135,9 @@ module.exports = {
                     embeds: [
                         embed
                             .setFooter(
-                                `${tag} won! (Option ${find}). It's the ${done[id]}${nth(done[id])} attempt of ${tag}`,
+                                `${tag} won! (Option ${find}). It's the ${
+                                    done[id]
+                                }${nth(done[id])} attempt of ${tag}`,
                                 interaction.user.displayAvatarURL()
                             )
                             .setColor("AQUA"),

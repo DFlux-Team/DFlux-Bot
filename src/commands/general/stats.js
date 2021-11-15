@@ -9,8 +9,7 @@ module.exports = {
         let userDB;
         if (user.id === message.author.id) userDB = authorUserDB;
         else userDB = await client.util.fetchUserData(user.id);
-        const embed = new MessageEmbed();
-        embed
+        const embed = new MessageEmbed()
             .setTitle(`${user.tag} Bump stats`)
             .addField("Total Bumps", `${userDB.totalBumps}`, true)
             .addField("Bumps this week", `${userDB.bumpsThisWeek}`, true);
