@@ -21,6 +21,9 @@ module.exports = {
         html: bumper,
         others: bumper,
     },
+    otherRoles: {
+        bumperOfThisWeek: "904328813738074162",
+    },
     channels: {
         help: "870344374347759636",
         python: "870330763772563484",

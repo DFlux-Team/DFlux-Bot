@@ -40,9 +40,35 @@ process.on("unhandledRejection", (error) => {
 process.on("beforeExit", (/*code*/) => {
     client.destroy();
 });
-clock.on("weekday", (dayNum) => {
+clock.on("weekday", async (dayNum) => {
     if (Number(dayNum) !== 7) return;
-    client.models.User.updateMany(
+    const users = await client.models.User.find({})
+        .filter((u) => u.totalBumps > 0)
+        .sort((a, b) => b.totalBumps - a.totalBumps);
+    let winner;
+    try {
+        [winner] = users;
+        // eslint-disable-next-line no-empty
+    } catch (e) {}
+    let member;
+    try {
+        member = await client.guilds.cache
+            .get(client.config.dflux)
+            .members.fetch(winner.id);
+        // eslint-disable-next-line no-empty
+    } catch (e) {}
+    if (winner) {
+        member.send(
+            "Hey hey!\nCongratulations, you are the bumper of this week!"
+        );
+        const role = client.config.otherRoles.bumperOfThisWeek;
+        const memberWithRole = member.guild.members.cache.find((m) =>
+            m.roles.cache.has(role)
+        );
+        if (memberWithRole) memberWithRole.roles.remove(role);
+        member.roles.add(role);
+    }
+    await client.models.User.updateMany(
         {},
         {
             $set: {

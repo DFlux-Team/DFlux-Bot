@@ -4,11 +4,14 @@ module.exports = {
     async execute(client) {
         client.channels.fetch(client.config.channels.reminder);
         client.util.setReminderTimeout();
-
         const presences = [
             {
                 name: `devs who use ${client.config.prefix}helpme <text>`,
                 type: "WATCHING",
+            },
+            {
+                name: `bored? Play some quiz with ${client.config.prefix}quiz`,
+                type: "PLAYING",
             },
         ];
         client.user.setPresence({
