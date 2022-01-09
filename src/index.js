@@ -40,11 +40,11 @@ process.on("unhandledRejection", (error) => {
 process.on("beforeExit", (/*code*/) => {
     client.destroy();
 });
-clock.on("weekday", async (dayNum) => {
-    if (Number(dayNum) !== 7) return;
-    const users = await client.models.User.find({})
-        .filter((u) => u.totalBumps > 0)
-        .sort((a, b) => b.totalBumps - a.totalBumps);
+clock.on("saturday", async () => {
+    let users = await client.models.User.find({}).lean();
+    users = users
+        .filter((u) => u.bumpsThisWeek > 0)
+        .sort((a, b) => b.bumpsThisWeek - a.bumpsThisWeek);
     let winner;
     try {
         [winner] = users;
