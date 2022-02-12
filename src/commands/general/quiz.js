@@ -1,8 +1,9 @@
 const {
-    MessageEmbed,
-    MessageActionRow,
-    MessageButton,
+    Embed,
+    ActionRow,
+    ButtonComponent,
     Collection,
+    Util,
 } = require("discord.js");
 const axios = require("axios");
 const genToken = () => {
@@ -59,28 +60,32 @@ module.exports = {
         });
         correct = correct[0].replace("_correct", "").replace("answer_", "");
         if (client.debug) console.log(correct);
-        const embed = new MessageEmbed()
+        const embed = new Embed()
             .setTitle("Developers Quiz!")
             .setDescription(question.question)
-            .addField("Category", `${question.category ?? "undefined"}`)
-            .addField(
-                "**Options**",
-                `• ${Object.values(question.answers)
+            .addField({
+                name: "Category",
+                value: `${question.category ?? "undefined"}`,
+            })
+            .addField({
+                name: "Options",
+                value: `• ${Object.values(question.answers)
                     .filter((o) => o)
-                    .join("\n• ")}`
-            )
-            .setColor("RANDOM");
+                    .join("\n• ")}`,
+            })
+            .setColor(Util.resolveColor("BLURPLE"));
         if (message.guild)
-            embed.setAuthor(
-                message.guild.name,
-                message.guild.iconURL() ??
-                    "https://emoji.gg/assets/emoji/discord.png"
-            );
+            embed.setAuthor({
+                name: message.guild.name,
+                iconURL:
+                    message.guild.iconURL() ??
+                    "https://emoji.gg/assets/emoji/discord.png",
+            });
         const options = [];
         Object.values(question.answers)
             .filter((o) => o)
             .forEach(() => {
-                options.push(new MessageButton());
+                options.push(new ButtonComponent());
             });
         const alpha = Array.from(Array(26)).map((e, i) => i + 65);
         const alphabets = alpha.map((x) =>
@@ -95,11 +100,11 @@ module.exports = {
             codes.set(alphabet, id);
             button
                 //.setEmoji(client.data.emojiCharacters[alphabet])
-                .setStyle("SUCCESS")
+                .setStyle(3) //Success
                 .setLabel(alphabet.toUpperCase())
                 .setCustomId(id);
         }
-        const row = new MessageActionRow();
+        const row = new ActionRow();
         options.forEach((option) => {
             row.addComponents(option);
         });
@@ -161,7 +166,7 @@ module.exports = {
                 });*/
             }
         });
-        collector.on("end", async (collected) => {
+        collector.on("end", async (/*collected*/) => {
             msg.edit({ embeds: [embed.setFooter("Timeout!")] });
         });
     },

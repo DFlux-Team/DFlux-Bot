@@ -1,6 +1,6 @@
 {
   "name": "dflux",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "DFlux helper bot",
   "private": true,
   "main": "src/index.js",
@@ -31,7 +31,7 @@
     "ascii-table": "^0.0.9",
     "axios": "^0.21.4",
     "date-events": "^1.0.1",
-    "discord.js": "^13.0.0",
+    "discord.js": "^14.0.0-dev.1643544396.388f535",
     "dotenv": "^10.0.0",
     "mongoose": "^6.0.12"
   },

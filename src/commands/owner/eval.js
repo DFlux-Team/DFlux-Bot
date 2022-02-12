@@ -1,20 +1,20 @@
-const { MessageEmbed } = require("discord.js");
+const { Embed } = require("discord.js");
 const { inspect } = require("util");
 module.exports = {
     name: "eval",
     owner: true,
     execute: async ({ message, client, args }) => {
         const content = args.join(" ");
-        const embed = new MessageEmbed().addField(
-            "**Input**",
-            "```js\n" + content + "\n```"
-        );
+        const embed = new Embed().addField({
+            name: "**Input**",
+            value: "```js\n" + content + "\n```",
+        });
         const result = new Promise((resolve) => resolve(eval(content)));
         const clean = (text) => {
             if (typeof text === "string") {
-                if (text.includes(message.client.token)) {
+                if (text.includes(client.token)) {
                     //Client token
-                    text = text.replace(message.client.token, "T0K3N");
+                    text = text.replace(client.token, "T0K3N");
                 }
                 return text
                     .replace(/`/g, "`" + String.fromCharCode(8203))
@@ -35,7 +35,7 @@ module.exports = {
                     embeds: [
                         embed
                             .setDescription("```js\n" + clean(output) + "\n```")
-                            .addField("**Type**", type),
+                            .addField({ name: "**Type**", value: type }),
                     ],
                 });
             })

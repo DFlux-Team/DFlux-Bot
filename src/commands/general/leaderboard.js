@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { Embed, Util } = require("discord.js");
 module.exports = {
     name: "leaderboard",
     aliases: ["bumpboard", "top", "lb"],
@@ -20,7 +20,7 @@ module.exports = {
                     return `• ${bumps} Bumps - <@${userId}> (${userId})`;
                 });
         });
-        const embed = new MessageEmbed()
+        const embed = new Embed()
             .setTitle(
                 `Top 10 - Bump Leaderboard - ${
                     totalOrWeekly === "totalBumps"
@@ -29,7 +29,7 @@ module.exports = {
                 }`
             )
             .setDescription(tags.join("\n"))
-            .setColor("BLURPLE");
+            .setColor(Util.resolveColor("BLURPLE"));
         message.channel.send({ embeds: [embed] });
     },
 };

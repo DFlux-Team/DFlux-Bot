@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { Embed } = require("discord.js");
 const { inspect } = require("util");
 const child = require("child_process");
 module.exports = {
@@ -6,15 +6,15 @@ module.exports = {
     owner: true,
     execute: async ({ message, client, args }) => {
         const command = args.join(" ");
-        const embed = new MessageEmbed().addField(
-            "**Input**",
-            "```js\n" + command + "\n```"
-        );
+        const embed = new Embed().addField({
+            name: "**Input**",
+            value: "```js\n" + command + "\n```",
+        });
         const clean = (text) => {
             if (typeof text === "string") {
-                if (text.includes(message.client.token)) {
+                if (text.includes(client.token)) {
                     //Client token
-                    text = text.replace(message.client.token, "T0K3N");
+                    text = text.replace(client.token, "T0K3N");
                 }
                 return text
                     .replace(/`/g, "`" + String.fromCharCode(8203))
@@ -45,7 +45,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setDescription("```js\n" + clean(res) + "\n```")
-                        .addField("**Type**", type),
+                        .addField({ name: "**Type**", value: type }),
                 ],
             });
         });

@@ -1,17 +1,14 @@
 require("dotenv").config();
-const { Client, Intents } = require("discord.js");
+const { Client, GatewayIntentBits /*, Partials*/ } = require("discord.js");
 const util = require("util");
 const clock = require("date-events")();
 const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        //Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.DirectMessages,
     ],
-    //partials: ["CHANNEL"],
+    //partials: [Partials.Channels],
 });
 process.on("unhandledRejection", (error) => {
     console.log("Unhandled promise rejection");
@@ -40,7 +37,9 @@ process.on("unhandledRejection", (error) => {
 process.on("beforeExit", (/*code*/) => {
     client.destroy();
 });
-clock.on("saturday", async () => {
+client.syncBumperOfThisWeek = async () => {
+    const weekday = new Date().getDay() + 1;
+    if (weekday !== 1) return; //stop running the function if the weekday is not 1 (aka sunday)
     let users = await client.models.User.find({}).lean();
     users = users
         .filter((u) => u.bumpsThisWeek > 0)
@@ -58,9 +57,15 @@ clock.on("saturday", async () => {
         // eslint-disable-next-line no-empty
     } catch (e) {}
     if (winner) {
-        member.send(
-            "Hey hey!\nCongratulations, you are the bumper of this week!"
+        const owner = await client.users.fetch(client.config.owners[0]);
+        member.user.send(
+            "Hey hey!\nCongratulations, you are the best bumper of this week!"
         );
+        owner
+            .send(
+                `${member} (${member.user.tag} - ${member.user.id}) has won the bumper of this week role.`
+            )
+            .catch(() => console.log("Can't dm the owner!!"));
         const role = client.config.otherRoles.bumperOfThisWeek;
         const memberWithRole = member.guild.members.cache.find((m) =>
             m.roles.cache.has(role)
@@ -76,7 +81,9 @@ clock.on("saturday", async () => {
             },
         }
     );
-});
+    if (client.bumperTimeout) clearTimeout(client.bumperTimeout);
+    client.bumperTimeout = null;
+};
 client.wait = util.promisify(setTimeout); // await client.wait(1000) - Wait 1 second
 client.config = require("./config");
 ["Command", "Event"].forEach((f) => {
@@ -89,6 +96,7 @@ client.data = require("./data");
 client.reminderTimeout = null;
 client.models = require("./models");
 client.util = new (require("./Util"))(client);
+clock.on("saturday", client.syncBumperOfThisWeek);
 // eslint-disable-next-line no-undef
 require("mongoose")
     .connect(process.env.MONGO_URL)

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { Embed } = require("discord.js");
 module.exports = {
     name: "stats",
     description: "Shows your bump stats or someone elses",
@@ -9,10 +9,18 @@ module.exports = {
         let userDB;
         if (user.id === message.author.id) userDB = authorUserDB;
         else userDB = await client.util.fetchUserData(user.id);
-        const embed = new MessageEmbed()
+        const embed = new Embed()
             .setTitle(`${user.tag} Bump stats`)
-            .addField("Total Bumps", `${userDB.totalBumps}`, true)
-            .addField("Bumps this week", `${userDB.bumpsThisWeek}`, true);
+            .addField({
+                name: "Total Bumps",
+                value: `${userDB.totalBumps}`,
+                inline: true,
+            })
+            .addField({
+                name: "Bumps this week",
+                value: `${userDB.bumpsThisWeek}`,
+                inline: true,
+            });
         message.channel.send({ embeds: [embed] });
     },
 };

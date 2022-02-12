@@ -1,20 +1,21 @@
-const { MessageEmbed } = require("discord.js");
+const { Embed } = require("discord.js");
 
 module.exports = {
     name: "help",
     description: "List of all commands",
     execute: async ({ message }) => {
-        const embed = new MessageEmbed()
-            .setColor("RANDOM")
+        const embed = new Embed()
             .setTitle(`${message.client.user.tag}`)
             .setURL("https://github.com/DFlux-Team/DFlux-Bot")
-            .setDescription("I Help People On The DevFlux Server")
             .setThumbnail(message.client.user.displayAvatarURL())
             .setTimestamp()
-            .setFooter(`Requested by ${message.author.tag}`);
+            .setFooter({ text: `Requested by ${message.author.tag}` });
         message.client.commands.each((cmd) => {
             if (cmd?.owner) return;
-            embed.addField(`${cmd.name}`, `${cmd?.description}`);
+            embed.addField({
+                name: `${cmd.name}`,
+                value: `${cmd.description ?? "No Description"}`,
+            });
         });
         message.channel.send({ embeds: [embed] });
     },
