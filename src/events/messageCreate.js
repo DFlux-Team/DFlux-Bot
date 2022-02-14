@@ -1,8 +1,25 @@
+const { PermissionsBitField } = require("discord.js");
 module.exports = {
     name: "messageCreate",
     once: false,
     async execute(client, message) {
-        if (client.debug) console.log("messageCreate event");
+        //if (client.debug) console.log("messageCreate event");
+        if (
+            !message.author.bot &&
+            message.channel.id !== client.config.selfPromo &&
+            message.content &&
+            message.content.includes("discord.gg") &&
+            !message.member.permissions.has(
+                PermissionsBitField.Flags.ManageMessages
+            )
+        ) {
+            await message
+                .reply("Please don't advertise servers here")
+                .then((msg) => {
+                    client.wait(3000).then(() => msg.delete());
+                });
+            message.delete();
+        }
         const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const prefixes = [escapeRegex(client.config.prefix.toLowerCase())];
         const prefixRegex = new RegExp(
