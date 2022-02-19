@@ -39,7 +39,7 @@ process.on("beforeExit", (/*code*/) => {
 });
 client.syncBumperOfThisWeek = async () => {
     const weekday = new Date().getDay() + 1;
-    if (weekday !== 1) return; //stop running the function if the weekday is not 1 (aka sunday)
+    if (weekday !== 1) return new Error("It's not sunday"); //stop running the function if the weekday is not 1 (aka sunday)
     let users = await client.models.User.find({}).lean();
     users = users
         .filter((u) => u.bumpsThisWeek > 0)

@@ -20,7 +20,7 @@ module.exports = {
         client.channels.fetch(client.config.channels.reminder);
         client.util.setReminderTimeout();
         presence(client);
-        setInterval(() => presence(client), 1 * 60 * 1000)
+        setInterval(() => presence(client), 1 * 60 * 1000);
         console.log(
             `${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.size} servers.`
         );
